@@ -112,6 +112,8 @@ public class AlphabeticDataLoad implements Runnable {
 
   void loadData(Connection conn) throws IOException {
     try (BufferedMutator writer = conn.getBufferedMutator(TABLE_NAME)) {
+      // NB: Actual table size will likely be less than NUM_ROWS entries as there isn't enough
+      // entropy in 4 characters to generate 1M unique rowkeys
       for (int n_row = 0; n_row < NUM_ROWS; n_row++) {
         Put p = new Put(getRowKey(n_row));
         for (int n_col = 0; n_col < NUM_COLS_PER_ROW; n_col++) {
